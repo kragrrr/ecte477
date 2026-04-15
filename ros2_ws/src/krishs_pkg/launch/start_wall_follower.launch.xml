@@ -1,0 +1,15 @@
+<launch>
+  <set_parameter name="use_sim_time" value="true" />
+
+  <!-- SLAM -->
+  <include file="$(find-pkg-share nav2_bringup)/launch/slam_launch.py"/>
+
+  <!-- RVIZ -->
+  <include file="$(find-pkg-share nav2_bringup)/launch/rviz_launch.py"/>
+
+  <!-- Wall follower command server -->
+  <node name="command_server" pkg="ecte477_starter_python" exec="command_server" output="screen"/>
+
+  <!-- Wall follower -->
+  <node name="wall_follower" pkg="ecte477_starter_python" exec="wall_follower" output="screen"/>
+</launch>

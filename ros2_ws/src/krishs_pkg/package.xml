@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>krishs_pkg</name>
+  <version>0.0.0</version>
+  <description>ECTE477 lab package for krish.</description>
+  <maintainer email="krish@example.com">krish</maintainer>
+  <license>Apache-2.0</license>
+
+  <depend>rclpy</depend>
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>krish_messages</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

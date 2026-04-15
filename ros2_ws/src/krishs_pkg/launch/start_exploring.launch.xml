@@ -1,0 +1,17 @@
+<launch>
+  <set_parameter name="use_sim_time" value="true" />
+
+  <!-- SLAM -->
+  <include file="$(find-pkg-share nav2_bringup)/launch/slam_launch.py"/>
+
+  <!-- Navigation -->
+  <include file="$(find-pkg-share ecte477)/launch/navigation_launch.py">
+    <arg name="params_file" value="$(find-pkg-share ecte477)/params/nav2_params.yaml"/>
+  </include>
+
+  <!-- RVIZ -->
+  <node name="rviz2" pkg="rviz2" exec="rviz2" args="-d $(find-pkg-share ecte477_starter_python)/config/my_rviz.rviz"/>
+
+  <!-- Explore -->
+  <node name="explore_tb3" pkg="ecte477_starter_python" exec="maze_explorer" output="screen"/>
+</launch>
