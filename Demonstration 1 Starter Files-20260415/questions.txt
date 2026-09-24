@@ -1,0 +1,69 @@
+Task Introduction
+In this task, you will be required to make the Turtlebot explore a maze (in Gazebo) and return home - as shown in the example maze of Figure 1.  You are provided with five starter files: a Python script, a launch file, an Rviz layout and sample package.xml & setup.py files.  You will need to create a new package called "demonstration1" (or similar) and place the script, launch file and Rviz layout in the correct folders.  You will also need to complete the launch file and script to make sure the listed requirements are met.  You should NOT alter the Rviz layout in any way (unless you need to update the package name of your demonstration package)!  
+The package.xml and setup.py files are provided for reference as you will need to edit the automatically generated ones (when you create your new package) to ensure they have the right dependencies and setup commands in order to build your package correctly.
+
+Figure 1
+
+Your demonstration should run via issuing the following 2 commands:
+ros2 launch practice_mazes maze_6_world.launch.xml
+ros2 launch demonstration1 start_all.launch.xml
+General Instructions
+There are 6 requirements for your demonstration task.  Each requirement will be listed as a separate question in this quiz.  You do not need to answer the questions directly in the quiz unless you wish to provide brief notes/comments that could help the marker in understanding your implementation of each requirement.  The questions will be manually marked, with marks based on the functionality of your solution.  Hence, the comments provided are only to support your solution.
+At the end of the quiz there will be a place to upload your solution.  You should upload a single ".zip" file that contains your complete demonstration1 package, so that the marker can examine your solution outside of class if required.  If the marker has already examined your working demonstration you do not need to upload it (the marker will inform you if this is the case at the time of marking).
+You will find that some topics you need to subscribe to will report that you have incompatible quality of service.  Hence, you will notice that I have included a qos_policy within the starter code - if you include this qos_policy (in place of the queue length) when setting up your subscribers, it should fix this issue.
+
+Requirement 1 - 3 marks
+The launch file should initialise the following:
+Any parameters that may be required for other launch files that you are including (see points 2 & 3).
+Include the slam_launch.py file (as seen in Week 5 Lab).
+Include the navigation_launch.py file (as seen in Week 5 Lab).
+You should launch a node for maze_explorer3 which is within the ecte477_starter_python package.
+You should launch a node for your my_node which is within the demonstration1 package.
+You should leave the part of the launch file that starts Rviz unchanged!
+Please provide any brief notes/comments to support your solution (no more than 2 lines).
+
+Requirement 2 - 2 marks
+maze_explorer3  will not start until a command is published for it to begin exploration.  Your node, my_node, should publish to the appropriate topic to initiate exploration 15 seconds after the node initialises.  Hint: the topic is of the type  std_msgs/msg/String and will be available once the maze_explorer3 node is launched.
+Please provide any brief notes/comments to support your solution (no more than 2 lines).
+
+Requirement 3 - 2 marks
+
+The Rviz panel has been configured to display the map on the topic /ecte477/slam_map.
+However, the SLAM package is publishing to the /map topic instead.
+Your node needs to make sure the map is republished to the correct topic.
+Hint: the /map topic is of the type 
+OccupancyGrid
+.
+
+Please provide any brief notes/comments to support your solution (no more than 2 lines).
+
+Requirement 4 - 2 marks
+
+You need to detect when the exploration is finished.
+If you take a look at the /stack_points topic with ros2 topic echo, you will notice something about the size of the markers array at the end.
+Hints: The /stack_points is of type 
+MarkerArray
+.  In Python, array length can be determined using the len() function.
+
+Please provide any brief notes/comments to support your solution (no more than 2 lines).
+
+Requirement 5 - 3 Marks
+Once the exploration is complete, the robot stops.  We want the robot to instead return home to (0, 0, 0).  After you have detected that the exploration is complete, wait for 8 seconds and then publish a movement goal to the topic /goal_pose to tell it to return to the origin.
+Hints: /goal_pose takes messages of the type 
+PoseStamped
+, which should have header.frame_id set to 'map'.  Also, the w variable in an orientation should always be set to 1.0.
+
+Please provide any brief notes/comments to support your solution (no more than 2 lines).
+
+Requirement 6 - 3 marks
+While exploring, we want to keep track of where the robot has been via the /ecte477/explorer topic.  This topic uses the message type 
+Path
+.  You can construct the message to publish by appending poses taken from the /odom topic.  Python arrays can be appended to via the .append() method.
+Using the same approach, we also want to publish the path taken by the robot when it is returning to the origin (i.e. after the exploration is complete).  You should do this by publishing a similar message to the /ecte477/home topic.  Hence, the exploring path should only be published during the exploration phase and the return path should only be published while the robot is returning to the origin (these paths will appear in RVIZ as green and red paths respectively).
+Hints:  The /odom topic uses the 
+Odometry
+ message type and any 
+Path
+ object you instantiate should have header.frame_id set to 'odom'.
+
+Please provide any brief notes/comments to support your solution (no more than 2 lines).
